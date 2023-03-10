@@ -1,8 +1,6 @@
 
-//ToDo import and implement the types from frontend
-
 /**
- * Inteface for DAO which communicates with a database and handles the workspace information flow to database.
+ * Inteface for DAO which communicates with a database and handles the workspace information flow to the said database.
  */
 export abstract class IWorkspacesDAO {
 
