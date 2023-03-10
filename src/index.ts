@@ -2,11 +2,15 @@ import express from "express"
 import { Express } from "express"
 import { mainSchema } from "./schema/schema"
 import  { graphqlHTTP } from "express-graphql"
+import { workspacesDAOJSON } from "./DAO/workspaces-dao-json"
 require('dotenv').config()
 
 const app: Express = express()
 const port = process.env.PORT
 const dataRoute: string | undefined = process.env.DATAROUTE
+
+const workspaceDAOClass = workspacesDAOJSON
+export const workspaceDAO = new workspaceDAOClass()
 
 if (!port) {
     throw new Error("Failed to spin up server because port is undefined.")

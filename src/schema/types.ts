@@ -8,10 +8,15 @@ import {
     GraphQLBoolean,
 } from "graphql"
 
+export interface Position2D {
+    x: number,
+    y: number
+}
+
 /**
  * A GraphQL object type which represents a connection between nodes in workspace.
  */
-const WSNodeConnectionType = new GraphQLObjectType ({
+export const WSNodeConnectionType = new GraphQLObjectType ({
     name: "WSNodeConnection",
     description: "This represents a connection between workspace nodes.",
     fields: () => ({
@@ -27,7 +32,7 @@ const WSNodeConnectionType = new GraphQLObjectType ({
 /**
  * A GraphQL object type which represents a position in 2D space.
  */
-const PositionType = new GraphQLObjectType({
+export const PositionType = new GraphQLObjectType({
     name: "Position",
     description: "This represents a position in 2D space.",
     fields: () => ({
@@ -39,7 +44,7 @@ const PositionType = new GraphQLObjectType({
 /**
  * A GraphQL object type which represents a workspace node.
  */
-const WSNodeType = new GraphQLObjectType ({
+export const WSNodeType = new GraphQLObjectType ({
     name: "WSNode",
     description: "This represents a workspace node.",
     fields: () => ({
@@ -55,7 +60,7 @@ const WSNodeType = new GraphQLObjectType ({
 /**
  * A GraphQL object type which represents a single workspace.
  */
-const WorkspaceType = new GraphQLObjectType({
+export const WorkspaceType = new GraphQLObjectType({
     name: "Workspace",
     description: "This represents a single workspace.",
     fields: () => ({

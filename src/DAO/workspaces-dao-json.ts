@@ -1,12 +1,20 @@
-import { IWorkspacesDAO } from "./workspaces-dao-type";
+import { Position2D } from "../schema/types";
+import { IWorkspacesDAO, Workspace } from "./workspaces-dao-type";
 
 /**
  * A dummy DAO which saves and updates the data to JSON.
  */
 export class workspacesDAOJSON extends IWorkspacesDAO {
 
-    async getWholeWorkspace(): Promise<void> {
-        
+    async getWholeWorkspace(): Promise<Workspace> {
+        const dummyWorkspace: Workspace = {
+            id: 0,
+            initNodes: [],
+            name: "dummy cur workspace",
+            nodes: [],
+            triggerCalc: false
+        }
+        return dummyWorkspace
     }
     async injectDB(): Promise<void> {
         
@@ -14,8 +22,15 @@ export class workspacesDAOJSON extends IWorkspacesDAO {
     async updateConnection(): Promise<void> {
         
     }
-    async updateWSNode(): Promise<void> {
+    async updateWSNodes(): Promise<void> {
         
+    }
+
+    async updateWSNodePosition(nodeId: number, newPosition: Position2D): Promise<void> {
+
+
+
+        return
     }
 
 }
