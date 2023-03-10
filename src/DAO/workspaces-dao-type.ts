@@ -6,8 +6,8 @@
  */
 export abstract class IWorkspacesDAO {
 
-    abstract injectDB(): void
-    abstract getWholeWorkspace(): void
-    abstract updateConnection(): void
-    abstract updateWSNode(): void
+    abstract injectDB(): Promise<void>
+    abstract getWholeWorkspace(): Promise<void>
+    abstract updateConnection(): Promise<void>
+    abstract updateWSNode(): Promise<void>
 }

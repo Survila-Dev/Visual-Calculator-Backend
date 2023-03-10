@@ -7,19 +7,19 @@ let workspacesDBConnection
  */
 export class workspacesDAOmongoDB extends IWorkspacesDAO {
 
-    async injectDB() {
+    async injectDB(): Promise<void> {
         
     }
 
-    async getWholeWorkspace() {
+    async getWholeWorkspace(): Promise<void> {
 
     }
 
-    async updateConnection() {
+    async updateConnection(): Promise<void> {
 
     }
 
-    async updateWSNode() {
+    async updateWSNode(): Promise<void> {
         
     }
 
