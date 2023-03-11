@@ -1,4 +1,24 @@
-import { Position2D } from "../schema/types"
+/**
+ * WS node connection interface to communicate with database.
+ */
+export interface IWSNodeConnection {
+    firstNodeId: number, firstPortId: number, secondNodeId: number, secondPortId: number
+}
+
+export interface Position2D {
+    x: number,
+    y: number
+}
+
+/**
+ * Node interface for communicating with database.
+ */
+export interface IWSNodeDatabase {
+    id: number,
+    type: TypesOfWSNodes,
+    position: Coordinates2D,
+    value: number | string,
+}
 
 /**
  * Inteface for DAO which communicates with a database and handles the workspace information flow to the said database.
@@ -8,14 +28,13 @@ export abstract class IWorkspacesDAO {
     abstract injectDB(): Promise<void>
     abstract getWholeWorkspace(): Promise<Workspace>
 
-    /**
-     * Add or remove connection between workspace nodes.
-     */
-    abstract updateConnection(): Promise<void>
-    /**
-     * Add or remove workspace nodes.
-     */
-    abstract updateWSNodes(): Promise<void>
+    abstract addNewConnection(connection: IWSNodeConnection): Promise<void>
+
+    abstract removeConnection(connection: IWSNodeConnection): Promise<void>
+
+    abstract addNewWSNode(node: IWSNodeDatabase): Promise<void>
+
+    abstract removeWSNode(nodeId: number): Promise<void>
 
     abstract updateWSNodePosition(nodeId: number, newPosition: Position2D): Promise<void>
 }

@@ -1,5 +1,3 @@
-//ToDo get whole workspace through query
-
 import { GraphQLObjectType } from "graphql";
 import { workspaceDAO } from "..";
 import { WorkspaceType } from "./types";

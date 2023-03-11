@@ -1,7 +1,8 @@
-//ToDo add mutation schemes
 import { GraphQLSchema } from "graphql"
+import { MutationQueryType } from "./mutation-fields"
 import { RootQueryType } from "./query-schema"
 
 export const mainSchema = new GraphQLSchema({
-    query: RootQueryType
+    query: RootQueryType,
+    mutation: MutationQueryType
 })

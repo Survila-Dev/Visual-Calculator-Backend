@@ -8,11 +8,6 @@ import {
     GraphQLBoolean,
 } from "graphql"
 
-export interface Position2D {
-    x: number,
-    y: number
-}
-
 /**
  * A GraphQL object type which represents a connection between nodes in workspace.
  */
