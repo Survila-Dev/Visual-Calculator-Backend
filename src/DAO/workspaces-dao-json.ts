@@ -3,6 +3,15 @@ import { promises as fs } from "fs"
 
 const jsonFileName = "src/DAO/dummyDatabase.json"
 
+const readAlterWrite = async (callback: (Workspace: Workspace) => Workspace) => {
+    const data = await fs.readFile(jsonFileName, "utf8")
+    const workspace = JSON.parse(data)
+
+    const alteredWorkspace = callback(workspace)
+
+    await fs.writeFile(jsonFileName, JSON.stringify(alteredWorkspace))
+}
+
 /**
  * A dummy DAO which saves and updates the data to JSON.
  */
@@ -15,57 +24,67 @@ export class workspacesDAOJSON extends IWorkspacesDAO {
     }
 
     async injectDB(): Promise<void> {
-        
+        console.log("Place holder for database inject subroutine.")
     }
 
     async addNewConnection(connection: IWSNodeConnection): Promise<void> {
-        // Create new connection and add it to both nodes
+        readAlterWrite((curWorkspace) => {
+
+            curWorkspace.nodes[connection.firstNodeId].connections.push({
+                otherNodeId: curWorkspace.nodes[connection.secondNodeId].id,
+                portOther: connection.secondPortId,
+                portSelf: connection.firstPortId
+            })
+
+            curWorkspace.nodes[connection.secondNodeId].connections.push({
+                otherNodeId: curWorkspace.nodes[connection.firstNodeId].id,
+                portOther: connection.firstPortId,
+                portSelf: connection.secondPortId
+            })
+
+            return curWorkspace
+
+        })
         
     }
 
     async removeConnection(connection: IWSNodeConnection): Promise<void> {
-        // Remove the connection from both nodes
+        //ToDo Remove the connection from both nodes
         
     }
 
     async addNewWSNode(node: IWSNodeDatabase): Promise<void> {
-        // Append new ws node to the workspace object.
-        const data = await fs.readFile(jsonFileName, "utf8")
-        const curWorkspace: Workspace = JSON.parse(data)
 
-        curWorkspace.nodes.push(
-            {
-                id: node.id,
-                position: node.position,
-                type: node.type,
-                value: node.value,
-                connections: [],
-                fullyConnected: false,
-            }
-        )
+        readAlterWrite((curWorkspace) => {
+            curWorkspace.nodes.push(
+                {
+                    id: node.id,
+                    position: node.position,
+                    type: node.type,
+                    value: node.value,
+                    connections: [],
+                    fullyConnected: false,
+                }
+            )
+            return curWorkspace
+        })
 
-        // Overwrite the json file
-        await fs.writeFile(jsonFileName, JSON.stringify(curWorkspace))
     }
 
     async removeWSNode(nodeId: number): Promise<void> {
-        // Remove the connections between the to be deleted node
+        //ToDo Remove the connections between the to be deleted node
         
-        // Remove the node itself
+        //ToDo Remove the node itself
         
     }
 
     async updateWSNodePosition(nodeId: number, newPosition: Position2D): Promise<void> {
-        // Update the position of single ws node
 
-        // Append new ws node to the workspace object.
-        const data = await fs.readFile(jsonFileName, "utf8")
-        const curWorkspace: Workspace = JSON.parse(data)
+        readAlterWrite((curWorkspace) => {
+            curWorkspace.nodes[nodeId].position = newPosition
 
-        curWorkspace.nodes[nodeId].position = newPosition
-
-        // Overwrite the json file
-        await fs.writeFile(jsonFileName, JSON.stringify(curWorkspace))
+            return curWorkspace
+        })
     }
 
 }

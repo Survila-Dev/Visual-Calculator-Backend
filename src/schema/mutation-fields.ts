@@ -1,6 +1,5 @@
 import { GraphQLFloat, GraphQLInt, GraphQLNonNull, GraphQLObjectType, GraphQLString } from "graphql";
 import { workspaceDAO } from "..";
-import { IWSNodeConnection, IWSNodeDatabase, Position2D } from "../DAO/workspaces-dao-type";
 import { WSNodeConnectionType, WSNodeType } from "./types";
 
 export const PositionType2 = new GraphQLObjectType({
@@ -75,7 +74,7 @@ export const MutationQueryType = new GraphQLObjectType({
                 })
             }
         },
-        
+
         removeConnection: {
             type: WSNodeConnectionType,
             description: "Deletes a connection between nodes.",
