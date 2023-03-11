@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.workspaceDAO = void 0;
 const express_1 = __importDefault(require("express"));
 const schema_1 = require("./schema/schema");
+const cors_1 = __importDefault(require("cors"));
 const workspaces_dao_json_1 = require("./DAO/workspaces-dao-json");
 require('dotenv').config();
 const expressGraphQL = require('express-graphql').graphqlHTTP;
@@ -20,6 +21,7 @@ if (!port) {
 else if (!dataRoute) {
     throw new Error("Failed to spin up server because data route is undefined.");
 }
+app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 // app.use(express.static("../static/"))
 app.use("/", expressGraphQL({

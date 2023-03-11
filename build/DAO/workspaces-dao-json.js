@@ -13,10 +13,21 @@ exports.workspacesDAOJSON = void 0;
 const workspaces_dao_type_1 = require("./workspaces-dao-type");
 const fs_1 = require("fs");
 const jsonFileName = "src/DAO/dummyDatabase.json";
+const readAlterWrite = (callback) => __awaiter(void 0, void 0, void 0, function* () {
+    const data = yield fs_1.promises.readFile(jsonFileName, "utf8");
+    const workspace = JSON.parse(data);
+    const alteredWorkspace = callback(workspace);
+    yield fs_1.promises.writeFile(jsonFileName, JSON.stringify(alteredWorkspace));
+});
 /**
  * A dummy DAO which saves and updates the data to JSON.
  */
 class workspacesDAOJSON extends workspaces_dao_type_1.IWorkspacesDAO {
+    injectDB() {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log("Place holder for database inject subroutine.");
+        });
+    }
     getWholeWorkspace() {
         return __awaiter(this, void 0, void 0, function* () {
             const data = yield fs_1.promises.readFile(jsonFileName, "utf8");
@@ -24,52 +35,66 @@ class workspacesDAOJSON extends workspaces_dao_type_1.IWorkspacesDAO {
             return workspace;
         });
     }
-    injectDB() {
+    updateWSNodePosition(nodeId, newPosition) {
         return __awaiter(this, void 0, void 0, function* () {
+            readAlterWrite((curWorkspace) => {
+                curWorkspace.nodes[nodeId].position = newPosition;
+                return curWorkspace;
+            });
+        });
+    }
+    updateWholeWorkspace(newWorkspace) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log("Updating the workspace.");
+            readAlterWrite((curWorksapce) => {
+                return newWorkspace;
+            });
         });
     }
     addNewConnection(connection) {
         return __awaiter(this, void 0, void 0, function* () {
-            // Create new connection and add it to both nodes
+            throw new Error("Not implemented.");
+            // readAlterWrite((curWorkspace) => {
+            //     curWorkspace.nodes[connection.firstNodeId].connections.push({
+            //         otherNodeId: curWorkspace.nodes[connection.secondNodeId].id,
+            //         portOther: connection.secondPortId,
+            //         portSelf: connection.firstPortId
+            //     })
+            //     curWorkspace.nodes[connection.secondNodeId].connections.push({
+            //         otherNodeId: curWorkspace.nodes[connection.firstNodeId].id,
+            //         portOther: connection.firstPortId,
+            //         portSelf: connection.secondPortId
+            //     })
+            //     return curWorkspace
+            // })
         });
     }
     removeConnection(connection) {
         return __awaiter(this, void 0, void 0, function* () {
-            // Remove the connection from both nodes
+            throw new Error("Not implemented.");
         });
     }
     addNewWSNode(node) {
         return __awaiter(this, void 0, void 0, function* () {
-            // Append new ws node to the workspace object.
-            const data = yield fs_1.promises.readFile(jsonFileName, "utf8");
-            const curWorkspace = JSON.parse(data);
-            curWorkspace.nodes.push({
-                id: node.id,
-                position: node.position,
-                type: node.type,
-                value: node.value,
-                connections: [],
-                fullyConnected: false,
-            });
-            // Overwrite the json file
-            yield fs_1.promises.writeFile(jsonFileName, JSON.stringify(curWorkspace));
+            throw new Error("Not implemented.");
+            // readAlterWrite((curWorkspace) => {
+            //     curWorkspace.nodes.push(
+            //         {
+            //             id: node.id,
+            //             position: node.position,
+            //             type: node.type,
+            //             value: node.value,
+            //             connections: [],
+            //             fullyConnected: false,
+            //         }
+            //     )
+            //     return curWorkspace
+            // })
         });
     }
     removeWSNode(nodeId) {
         return __awaiter(this, void 0, void 0, function* () {
-            // Remove the connections between the to be deleted node
-            // Remove the node itself
-        });
-    }
-    updateWSNodePosition(nodeId, newPosition) {
-        return __awaiter(this, void 0, void 0, function* () {
-            // Update the position of single ws node
-            // Append new ws node to the workspace object.
-            const data = yield fs_1.promises.readFile(jsonFileName, "utf8");
-            const curWorkspace = JSON.parse(data);
-            curWorkspace.nodes[nodeId].position = newPosition;
-            // Overwrite the json file
-            yield fs_1.promises.writeFile(jsonFileName, JSON.stringify(curWorkspace));
+            throw new Error("Not implemented.");
         });
     }
 }

@@ -36,6 +36,7 @@ export class workspacesDAOJSON extends IWorkspacesDAO {
     }
 
     async updateWholeWorkspace(newWorkspace: Workspace): Promise<void> {
+        console.log("Updating the workspace.")
         readAlterWrite((curWorksapce) => {
             return newWorkspace
         })

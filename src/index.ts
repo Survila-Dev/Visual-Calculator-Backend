@@ -1,6 +1,7 @@
 import express from "express"
 import { Express } from "express"
 import { mainSchema } from "./schema/schema"
+import cors from "cors"
 import  { graphqlHTTP } from "express-graphql"
 import { workspacesDAOJSON } from "./DAO/workspaces-dao-json"
 require('dotenv').config()
@@ -19,6 +20,7 @@ if (!port) {
     throw new Error("Failed to spin up server because data route is undefined.")
 }
 
+app.use(cors());
 app.use(express.json())
 // app.use(express.static("../static/"))
 app.use("/", expressGraphQL({

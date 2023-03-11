@@ -1,9 +1,9 @@
 {
     "name": "First workspace - hello world",
-    "id": 2260,
+    "id": 0,
     "nodes": [
         {
-            "id": 101,
+            "id": 0,
             "type": "constant",
             "position": {
                 "x": 0,
@@ -14,7 +14,7 @@
             "fullyConnected": false
         },
         {
-            "id": 102,
+            "id": 1,
             "type": "constant",
             "position": {
                 "x": 100,
