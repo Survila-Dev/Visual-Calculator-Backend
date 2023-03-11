@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.MutationQueryType = exports.PositionType2 = void 0;
 const graphql_1 = require("graphql");
 const __1 = require("..");
+const input_types_1 = require("./input-types");
 const types_1 = require("./types");
 exports.PositionType2 = new graphql_1.GraphQLObjectType({
     name: "Position",
@@ -20,10 +21,10 @@ exports.MutationQueryType = new graphql_1.GraphQLObjectType({
             type: types_1.WorkspaceType,
             description: "Updates the whole workspace at once. The argument is stringified workspace object.",
             args: {
-                workspace: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) }
+                workspace: { type: input_types_1.WorkspaceInputType }
             },
             resolve: (parent, args) => {
-                __1.workspaceDAO.updateWholeWorkspace(JSON.parse(args.workspace));
+                __1.workspaceDAO.updateWholeWorkspace(args.workspace);
             }
         },
         updateNodePosition: {

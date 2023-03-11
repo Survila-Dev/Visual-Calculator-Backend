@@ -22,13 +22,13 @@ export class workspacesDAOJSON extends IWorkspacesDAO {
     }
 
     async getWholeWorkspace(): Promise<Workspace> {
+        console.log("Overwriting workspace from backend.")
         const data = await fs.readFile(jsonFileName, "utf8")
         const workspace = JSON.parse(data)
         return workspace
     }
     
     async updateWSNodePosition(nodeId: number, newPosition: Position2D): Promise<void> {
-
         readAlterWrite((curWorkspace) => {
             curWorkspace.nodes[nodeId].position = newPosition
             return curWorkspace

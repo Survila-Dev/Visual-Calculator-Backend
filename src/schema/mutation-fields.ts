@@ -1,5 +1,6 @@
 import { GraphQLFloat, GraphQLInt, GraphQLNonNull, GraphQLObjectType, GraphQLString } from "graphql";
 import { workspaceDAO } from "..";
+import { WorkspaceInputType } from "./input-types";
 import { WorkspaceType, WSNodeConnectionType, WSNodeType } from "./types";
 
 export const PositionType2 = new GraphQLObjectType({
@@ -19,10 +20,10 @@ export const MutationQueryType = new GraphQLObjectType({
             type: WorkspaceType,
             description: "Updates the whole workspace at once. The argument is stringified workspace object.",
             args: {
-                workspace: { type: new GraphQLNonNull(GraphQLString) }
+                workspace: { type: WorkspaceInputType }
             },
             resolve: (parent: any, args: any) => {
-                workspaceDAO.updateWholeWorkspace(JSON.parse(args.workspace))
+                workspaceDAO.updateWholeWorkspace(args.workspace)
             }
         },
 

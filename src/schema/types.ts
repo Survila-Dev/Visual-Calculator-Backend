@@ -6,6 +6,8 @@ import {
     GraphQLNonNull,
     GraphQLFloat,
     GraphQLBoolean,
+    GraphQLInputObjectType,
+    
 } from "graphql"
 
 /**
@@ -15,8 +17,8 @@ export const WSNodeConnectionType = new GraphQLObjectType ({
     name: "WSNodeConnection",
     description: "This represents a connection between workspace nodes.",
     fields: () => ({
-        id: { type: new GraphQLNonNull(GraphQLInt) },
-        nodeId: { type: new GraphQLNonNull(GraphQLInt) },
+        // id: { type: new GraphQLNonNull(GraphQLInt) },
+        // nodeId: { type: new GraphQLNonNull(GraphQLInt) },
         portSelf: { type: new GraphQLNonNull(GraphQLInt) },
         portOther: { type: new GraphQLNonNull(GraphQLInt) },
         otherNodeId: { type: new GraphQLNonNull(GraphQLInt) }
@@ -64,3 +66,5 @@ export const WorkspaceType = new GraphQLObjectType({
         nodes: { type: new GraphQLList(WSNodeType) },
     })
 })
+
+

@@ -30,6 +30,7 @@ class workspacesDAOJSON extends workspaces_dao_type_1.IWorkspacesDAO {
     }
     getWholeWorkspace() {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log("Overwriting workspace from backend.");
             const data = yield fs_1.promises.readFile(jsonFileName, "utf8");
             const workspace = JSON.parse(data);
             return workspace;
