@@ -28,15 +28,17 @@ export abstract class IWorkspacesDAO {
     abstract injectDB(): Promise<void>
     abstract getWholeWorkspace(): Promise<Workspace>
 
-    abstract addNewConnection(connection: IWSNodeConnection): Promise<void>
+    abstract addNewConnection?(connection: IWSNodeConnection): Promise<void>
 
-    abstract removeConnection(connection: IWSNodeConnection): Promise<void>
+    abstract removeConnection?(connection: IWSNodeConnection): Promise<void>
 
-    abstract addNewWSNode(node: IWSNodeDatabase): Promise<void>
+    abstract addNewWSNode?(node: IWSNodeDatabase): Promise<void>
 
-    abstract removeWSNode(nodeId: number): Promise<void>
+    abstract removeWSNode?(nodeId: number): Promise<void>
 
     abstract updateWSNodePosition(nodeId: number, newPosition: Position2D): Promise<void>
+    
+    abstract updateWholeWorkspace(newWorkspace: Workspace): Promise<void>
 }
 
 /**
