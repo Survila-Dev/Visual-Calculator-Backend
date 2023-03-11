@@ -4,6 +4,7 @@ import { mainSchema } from "./schema/schema"
 import  { graphqlHTTP } from "express-graphql"
 import { workspacesDAOJSON } from "./DAO/workspaces-dao-json"
 require('dotenv').config()
+const expressGraphQL = require('express-graphql').graphqlHTTP
 
 const app: Express = express()
 const port = process.env.PORT
@@ -19,10 +20,11 @@ if (!port) {
 }
 
 app.use(express.json())
-app.use(express.static("../static/"))
-app.use(dataRoute, graphqlHTTP({
+// app.use(express.static("../static/"))
+app.use("/", expressGraphQL({
     schema: mainSchema,
     graphiql: true 
 }))
-app.listen(() => console.log(`Server is listening to port ${port}`))
+
+app.listen(port, () => console.log(`Server is listening to port ${port}`))
 

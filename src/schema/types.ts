@@ -61,6 +61,6 @@ export const WorkspaceType = new GraphQLObjectType({
     fields: () => ({
         name: { type: new GraphQLNonNull(GraphQLString)},
         id: { type: new GraphQLNonNull(GraphQLInt) },
-        fullyConnected: { type: new GraphQLNonNull(WSNodeType) },
+        nodes: { type: new GraphQLList(WSNodeType) },
     })
 })

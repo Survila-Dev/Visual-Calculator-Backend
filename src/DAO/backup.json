@@ -1,0 +1,30 @@
+{
+    "name": "First workspace - hello world",
+    "id": 2260,
+    "nodes": [
+        {
+            "id": 101,
+            "type": "constant",
+            "position": {
+                "x": 0,
+                "y": 0
+            },
+            "connections": [],
+            "value": 200,
+            "fullyConnected": false
+        },
+        {
+            "id": 102,
+            "type": "constant",
+            "position": {
+                "x": 100,
+                "y": 100
+            },
+            "connections": [],
+            "value": 400,
+            "fullyConnected": false
+        }
+    ],
+    "initNodes": [],
+    "triggerCalc": false
+}
