@@ -64,6 +64,20 @@ export const WorkspaceType = new GraphQLObjectType({
         name: { type: new GraphQLNonNull(GraphQLString)},
         id: { type: new GraphQLNonNull(GraphQLInt) },
         nodes: { type: new GraphQLList(WSNodeType) },
+        curveConnections: {type: new GraphQLList(CurveConnection)}
+    })
+})
+
+export const CurveConnection = new GraphQLObjectType({
+    name: "CurveConnection",
+    description: "This represents a connection data type for drawing curves.",
+    fields: () => ({
+        firstNodeId: { type: new GraphQLNonNull(GraphQLInt) },
+        firstPortId: { type: new GraphQLNonNull(GraphQLInt) },
+        secondNodeId: { type: new GraphQLNonNull(GraphQLInt) },
+        secondPortId: { type: new GraphQLNonNull(GraphQLInt) },
+        firstPortPosition: { type: PositionType },
+        secondPortPosition: { type: PositionType },
     })
 })
 

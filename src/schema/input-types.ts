@@ -7,6 +7,7 @@ export const WorkspaceInputType = new GraphQLInputObjectType({
         name: { type: new GraphQLNonNull(GraphQLString) } ,
         id: { type: new GraphQLNonNull(GraphQLInt) },
         nodes: { type: new GraphQLList(WSNodeInputType) },
+        curveConnections: { type: new GraphQLList(CurveConnectionInput)}
     }),
     
 })
@@ -42,5 +43,18 @@ export const PositionInputType = new GraphQLInputObjectType({
     fields: () => ({
         x: { type: new GraphQLNonNull(GraphQLFloat) },
         y: { type: new GraphQLNonNull(GraphQLFloat) }
+    })
+})
+
+export const CurveConnectionInput = new GraphQLInputObjectType({
+    name: "CurveConnectionInput",
+    description: "This represents a connection data type for drawing curves.",
+    fields: () => ({
+        firstNodeId: { type: new GraphQLNonNull(GraphQLInt) },
+        firstPortId: { type: new GraphQLNonNull(GraphQLInt) },
+        secondNodeId: { type: new GraphQLNonNull(GraphQLInt) },
+        secondPortId: { type: new GraphQLNonNull(GraphQLInt) },
+        firstPortPosition: { type: PositionInputType },
+        secondPortPosition: { type: PositionInputType },
     })
 })

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PositionInputType = exports.WSNodeConnectionInputType = exports.WSNodeInputType = exports.WorkspaceInputType = void 0;
+exports.CurveConnectionInput = exports.PositionInputType = exports.WSNodeConnectionInputType = exports.WSNodeInputType = exports.WorkspaceInputType = void 0;
 const graphql_1 = require("graphql");
 exports.WorkspaceInputType = new graphql_1.GraphQLInputObjectType({
     name: "WorkspaceInput",
@@ -9,6 +9,7 @@ exports.WorkspaceInputType = new graphql_1.GraphQLInputObjectType({
         name: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
         id: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLInt) },
         nodes: { type: new graphql_1.GraphQLList(exports.WSNodeInputType) },
+        curveConnections: { type: new graphql_1.GraphQLList(exports.CurveConnectionInput) }
     }),
 });
 exports.WSNodeInputType = new graphql_1.GraphQLInputObjectType({
@@ -40,5 +41,17 @@ exports.PositionInputType = new graphql_1.GraphQLInputObjectType({
     fields: () => ({
         x: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLFloat) },
         y: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLFloat) }
+    })
+});
+exports.CurveConnectionInput = new graphql_1.GraphQLInputObjectType({
+    name: "CurveConnectionInput",
+    description: "This represents a connection data type for drawing curves.",
+    fields: () => ({
+        firstNodeId: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLInt) },
+        firstPortId: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLInt) },
+        secondNodeId: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLInt) },
+        secondPortId: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLInt) },
+        firstPortPosition: { type: exports.PositionInputType },
+        secondPortPosition: { type: exports.PositionInputType },
     })
 });
