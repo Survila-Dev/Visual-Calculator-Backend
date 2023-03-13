@@ -1,1 +1,1 @@
-{"name":"First workspace","id":0,"nodes":[{"id":1,"type":"constant","position":{"x":145,"y":155.3333282470703},"connections":[],"value":"12","fullyConnected":true},{"id":2,"type":"constant","position":{"x":153,"y":329.33331298828125},"connections":[],"value":"12","fullyConnected":true}]}
+{"name":"First workspace","id":0,"nodes":[{"id":1,"type":"output","position":{"x":145,"y":155.3333282470703},"connections":[],"value":"12","fullyConnected":true},{"id":2,"type":"constant","position":{"x":153,"y":329.33331298828125},"connections":[],"value":"12","fullyConnected":true}]}

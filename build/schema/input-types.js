@@ -27,8 +27,8 @@ exports.WSNodeConnectionInputType = new graphql_1.GraphQLInputObjectType({
     name: "WSNodeConnectionInput",
     description: "This represents a connection between workspace nodes.",
     fields: () => ({
-        // id: { type: new GraphQLNonNull(GraphQLInt) },
-        // nodeId: { type: new GraphQLNonNull(GraphQLInt) },
+        id: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLInt) },
+        nodeId: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLInt) },
         portSelf: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLInt) },
         portOther: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLInt) },
         otherNodeId: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLInt) }

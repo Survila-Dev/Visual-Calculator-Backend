@@ -28,8 +28,8 @@ export const WSNodeConnectionInputType = new GraphQLInputObjectType ({
     name: "WSNodeConnectionInput",
     description: "This represents a connection between workspace nodes.",
     fields: () => ({
-        // id: { type: new GraphQLNonNull(GraphQLInt) },
-        // nodeId: { type: new GraphQLNonNull(GraphQLInt) },
+        id: { type: new GraphQLNonNull(GraphQLInt) },
+        nodeId: { type: new GraphQLNonNull(GraphQLInt) },
         portSelf: { type: new GraphQLNonNull(GraphQLInt) },
         portOther: { type: new GraphQLNonNull(GraphQLInt) },
         otherNodeId: { type: new GraphQLNonNull(GraphQLInt) }
