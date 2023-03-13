@@ -64,7 +64,8 @@ export const WorkspaceType = new GraphQLObjectType({
         name: { type: new GraphQLNonNull(GraphQLString)},
         id: { type: new GraphQLNonNull(GraphQLInt) },
         nodes: { type: new GraphQLList(WSNodeType) },
-        curveConnections: {type: new GraphQLList(CurveConnection)}
+        curveConnections: {type: new GraphQLList(CurveConnection)},
+        fieldPosition: { type: PositionType }
     })
 })
 

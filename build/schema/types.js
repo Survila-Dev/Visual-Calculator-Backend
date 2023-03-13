@@ -52,7 +52,8 @@ exports.WorkspaceType = new graphql_1.GraphQLObjectType({
         name: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
         id: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLInt) },
         nodes: { type: new graphql_1.GraphQLList(exports.WSNodeType) },
-        curveConnections: { type: new graphql_1.GraphQLList(exports.CurveConnection) }
+        curveConnections: { type: new graphql_1.GraphQLList(exports.CurveConnection) },
+        fieldPosition: { type: exports.PositionType }
     })
 });
 exports.CurveConnection = new graphql_1.GraphQLObjectType({
