@@ -9,7 +9,8 @@ exports.WorkspaceInputType = new graphql_1.GraphQLInputObjectType({
         name: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
         id: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLInt) },
         nodes: { type: new graphql_1.GraphQLList(exports.WSNodeInputType) },
-        curveConnections: { type: new graphql_1.GraphQLList(exports.CurveConnectionInput) }
+        curveConnections: { type: new graphql_1.GraphQLList(exports.CurveConnectionInput) },
+        fieldPosition: { type: exports.PositionInputType }
     }),
 });
 exports.WSNodeInputType = new graphql_1.GraphQLInputObjectType({

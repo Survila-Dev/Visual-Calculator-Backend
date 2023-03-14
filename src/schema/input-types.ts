@@ -7,7 +7,8 @@ export const WorkspaceInputType = new GraphQLInputObjectType({
         name: { type: new GraphQLNonNull(GraphQLString) } ,
         id: { type: new GraphQLNonNull(GraphQLInt) },
         nodes: { type: new GraphQLList(WSNodeInputType) },
-        curveConnections: { type: new GraphQLList(CurveConnectionInput)}
+        curveConnections: { type: new GraphQLList(CurveConnectionInput)},
+        fieldPosition: { type: PositionInputType }
     }),
     
 })
