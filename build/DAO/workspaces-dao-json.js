@@ -13,10 +13,17 @@ exports.workspacesDAOJSON = void 0;
 const workspaces_dao_type_1 = require("./workspaces-dao-type");
 const fs_1 = require("fs");
 const jsonFileName = "src/DAO/dummyDatabase.json";
+const _id = "1";
 const readAlterWrite = (callback) => __awaiter(void 0, void 0, void 0, function* () {
     const data = yield fs_1.promises.readFile(jsonFileName, "utf8");
     const workspace = JSON.parse(data);
+    // const dbValue = JSON.parse(data)
+    // const workspace = dbValue.workspace
     const alteredWorkspace = callback(workspace);
+    // const writeDBValue = {
+    //     _id: _id,
+    //     workspace: alteredWorkspace
+    // }
     yield fs_1.promises.writeFile(jsonFileName, JSON.stringify(alteredWorkspace));
 });
 /**
@@ -33,6 +40,7 @@ class workspacesDAOJSON extends workspaces_dao_type_1.IWorkspacesDAO {
             console.log("Overwriting workspace from backend.");
             const data = yield fs_1.promises.readFile(jsonFileName, "utf8");
             const workspace = JSON.parse(data);
+            // const workspace = dbValue.workspace
             return workspace;
         });
     }

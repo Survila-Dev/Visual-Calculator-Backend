@@ -3,12 +3,20 @@ import { promises as fs } from "fs"
 
 const jsonFileName = "src/DAO/dummyDatabase.json"
 
+const _id = "1"
+
 const readAlterWrite = async (callback: (Workspace: Workspace) => Workspace) => {
     const data = await fs.readFile(jsonFileName, "utf8")
     const workspace = JSON.parse(data)
+    // const dbValue = JSON.parse(data)
+    // const workspace = dbValue.workspace
 
     const alteredWorkspace = callback(workspace)
 
+    // const writeDBValue = {
+    //     _id: _id,
+    //     workspace: alteredWorkspace
+    // }
     await fs.writeFile(jsonFileName, JSON.stringify(alteredWorkspace))
 }
 
@@ -25,6 +33,7 @@ export class workspacesDAOJSON extends IWorkspacesDAO {
         console.log("Overwriting workspace from backend.")
         const data = await fs.readFile(jsonFileName, "utf8")
         const workspace = JSON.parse(data)
+        // const workspace = dbValue.workspace
         return workspace
     }
     
