@@ -1,3 +1,5 @@
+import mongodb from "mongodb"
+
 /**
  * WS node connection interface to communicate with database.
  */
@@ -25,20 +27,23 @@ export interface IWSNodeDatabase {
  */
 export abstract class IWorkspacesDAO {
 
-    abstract injectDB(): Promise<void>
-    abstract getWholeWorkspace(): Promise<Workspace>
+    abstract injectDB(client: mongodb.MongoClient): Promise<void>
 
-    abstract addNewConnection?(connection: IWSNodeConnection): Promise<void>
+    abstract getWholeWorkspace(userID: string): Promise<Workspace>
 
-    abstract removeConnection?(connection: IWSNodeConnection): Promise<void>
+    abstract updateWholeWorkspace(userID: string, newWorkspace: Workspace): Promise<void>
 
-    abstract addNewWSNode?(node: IWSNodeDatabase): Promise<void>
+    // abstract addNewConnection?(connection: IWSNodeConnection): Promise<void>
 
-    abstract removeWSNode?(nodeId: number): Promise<void>
+    // abstract removeConnection?(connection: IWSNodeConnection): Promise<void>
 
-    abstract updateWSNodePosition(nodeId: number, newPosition: Position2D): Promise<void>
+    // abstract addNewWSNode?(node: IWSNodeDatabase): Promise<void>
+
+    // abstract removeWSNode?(nodeId: number): Promise<void>
+
+    // abstract updateWSNodePosition(nodeId: number, newPosition: Position2D): Promise<void>
     
-    abstract updateWholeWorkspace(newWorkspace: Workspace): Promise<void>
+    
 }
 
 /**
