@@ -8,7 +8,7 @@ require('dotenv').config()
 const expressGraphQL = require('express-graphql').graphqlHTTP
 
 import mongodb from "mongodb"
-import { workspacesDAOmongoDB } from "./DAO/workspaces-dao-mongoDB"
+import { workspacesDAOmongoDB, workspacesDAOmongoDBClass } from "./DAO/workspaces-dao-mongoDB"
 
 const MongoClient = mongodb.MongoClient;
 
@@ -16,8 +16,8 @@ const app: Express = express()
 const port = process.env.PORT
 const dataRoute: string | undefined = process.env.DATAROUTE
 
-const workspaceDAOClass = workspacesDAOJSON
-export const workspaceDAO = new workspaceDAOClass()
+// const workspaceDAOClass = workspacesDAOmongoDBClass
+export const workspaceDAO = workspacesDAOmongoDB
 
 if (!port) {
     throw new Error("Failed to spin up server because port is undefined.")
@@ -47,7 +47,7 @@ if (process.env.DB_URI) {
             process.exit(1)
         })
         .then(async client => { 
-            await workspacesDAOmongoDB.injectDB(client)
+            await workspaceDAO.injectDB(client)
             app.listen(port, () => {
                 console.log(`Server is listening to port ${port}`)
             })

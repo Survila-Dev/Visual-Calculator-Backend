@@ -27,11 +27,11 @@ export interface IWSNodeDatabase {
  */
 export abstract class IWorkspacesDAO {
 
-    abstract injectDB(client: mongodb.MongoClient): Promise<void>
+    abstract injectDB(client: mongodb.MongoClient): Promise<void | Error>
 
-    abstract getWholeWorkspace(userID: string): Promise<Workspace>
+    abstract getWholeWorkspace(userID: string): Promise<Workspace | Error>
 
-    abstract updateWholeWorkspace(userID: string, newWorkspace: Workspace): Promise<void>
+    abstract updateWholeWorkspace(userID: string, newWorkspace: Workspace): Promise<void | Error>
 
     // abstract addNewConnection?(connection: IWSNodeConnection): Promise<void>
 

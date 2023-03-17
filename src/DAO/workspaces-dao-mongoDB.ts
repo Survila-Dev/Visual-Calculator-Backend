@@ -22,19 +22,51 @@ export class workspacesDAOmongoDBClass extends IWorkspacesDAO {
     }
 
     async getWholeWorkspace(userID: string): Promise<Workspace> {
-        const dummy: Workspace = {
-            id: 0,
-            initNodes: [],
-            name: "no name",
-            nodes: [],
-            triggerCalc: false
+        // const dummy: Workspace = {
+        //     id: 0,
+        //     initNodes: [],
+        //     name: "no name",
+        //     nodes: [],
+        //     triggerCalc: false
+        // }
+        const query = {"user_id": {$eq: userID}}
+        let cursor
+        try {
+            cursor = await workspacesDBContent.find(query)
+        } catch(e) {
+            console.error(`Unable to issue find command, ${e}`)
         }
-        return dummy
+        const readValue = cursor.toArray()
+
+        return readValue[0].content
+
+        // return dummy
     }
 
-    async updateWholeWorkspace(userID: string, workspace: Workspace): Promise<void> {
+    async updateWholeWorkspace(userID: string, workspace: Workspace): Promise<void | Error> {
 
-        // update existing workspace or write new one
+        try {
+            // check if the user id exists, if so update, if not insert new one
+            // update existing workspace or write new one
+            const dummy: Workspace = {
+                id: 0,
+                initNodes: [],
+                name: "no name",
+                nodes: [],
+                triggerCalc: false
+            }
+
+            const insertContent = {
+                user_id: userID,
+                content: dummy
+            }
+
+            workspacesDBContent.insertOne(insertContent)
+
+        } catch (err) {
+            console.error(`Unable to post the workspace content: ${err}`)
+            return new Error(err as string)
+        }
     }
 
 }
