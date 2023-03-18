@@ -22,13 +22,7 @@ export class workspacesDAOmongoDBClass extends IWorkspacesDAO {
     }
 
     async getWholeWorkspace(userID: string): Promise<Workspace> {
-        // const dummy: Workspace = {
-        //     id: 0,
-        //     initNodes: [],
-        //     name: "no name",
-        //     nodes: [],
-        //     triggerCalc: false
-        // }
+  
         const query = {"user_id": {$eq: userID}}
         let cursor
         try {
@@ -36,32 +30,38 @@ export class workspacesDAOmongoDBClass extends IWorkspacesDAO {
         } catch(e) {
             console.error(`Unable to issue find command, ${e}`)
         }
-        const readValue = cursor.toArray()
-
+        const readValue = await cursor.toArray()
+        
         return readValue[0].content
 
-        // return dummy
     }
 
     async updateWholeWorkspace(userID: string, workspace: Workspace): Promise<void | Error> {
 
         try {
-            // check if the user id exists, if so update, if not insert new one
-            // update existing workspace or write new one
-            const dummy: Workspace = {
-                id: 0,
-                initNodes: [],
-                name: "no name",
-                nodes: [],
-                triggerCalc: false
+            // Checking if the document already exists
+            const query = {"user_id": {$eq: userID}}
+            let cursor
+            try {
+                cursor = await workspacesDBContent.find(query)
+            } catch(e) {
+                console.error(`Unable to issue find command, ${e}`)
             }
+            const readValue = await cursor.toArray()
 
-            const insertContent = {
-                user_id: userID,
-                content: dummy
+            if (readValue.length === 0) {
+                const insertContent = {
+                    user_id: userID,
+                    content: workspace
+                }
+
+                workspacesDBContent.insertOne(insertContent)
+            } else {
+                workspacesDBContent.updateOne(
+                    { user_id: userID },
+                    { $set: { content: workspace } },
+                )
             }
-
-            workspacesDBContent.insertOne(insertContent)
 
         } catch (err) {
             console.error(`Unable to post the workspace content: ${err}`)

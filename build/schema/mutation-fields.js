@@ -5,6 +5,7 @@ const graphql_1 = require("graphql");
 const __1 = require("..");
 const input_types_1 = require("./input-types");
 const types_1 = require("./types");
+const userID = "12";
 exports.PositionType2 = new graphql_1.GraphQLObjectType({
     name: "Position",
     description: "This represents a position in 2D space.",
@@ -24,82 +25,82 @@ exports.MutationQueryType = new graphql_1.GraphQLObjectType({
                 workspace: { type: input_types_1.WorkspaceInputType }
             },
             resolve: (parent, args) => {
-                __1.workspaceDAO.updateWholeWorkspace(args.workspace);
+                __1.workspaceDAO.updateWholeWorkspace(userID, args.workspace);
             }
         },
-        updateNodePosition: {
-            type: types_1.WSNodeConnectionType,
-            description: "Updates the position of workspace node.",
-            args: {
-                nodeId: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLInt) },
-                x: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLFloat) },
-                y: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLFloat) },
-            },
-            resolve: (parent, args) => {
-                __1.workspaceDAO.updateWSNodePosition(args.nodeId, { x: args.x, y: args.y });
-            }
-        },
-        addNode: {
-            type: types_1.WSNodeType,
-            description: "Adds a node to workspace.",
-            args: {
-                id: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLInt) },
-                x: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLFloat) },
-                y: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLFloat) },
-                type: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
-                value: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLFloat) },
-            },
-            resolve: (parent, args) => {
-                __1.workspaceDAO.addNewWSNode({
-                    id: args.id,
-                    position: { x: args.x, y: args.y },
-                    type: args.type,
-                    value: args.value
-                });
-            }
-        },
-        removeNode: {
-            type: types_1.WSNodeType,
-            description: "Deletes a node from workspace.",
-            resolve: (parent, args) => {
-                __1.workspaceDAO.removeWSNode(args.nodeId);
-            }
-        },
-        addConnection: {
-            type: types_1.WSNodeConnectionType,
-            description: "Adds new connection between nodes.",
-            args: {
-                firstNodeId: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLInt) },
-                firstPortId: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLInt) },
-                secondNodeId: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLInt) },
-                secondPortId: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLInt) },
-            },
-            resolve: (parent, args) => {
-                __1.workspaceDAO.addNewConnection({
-                    firstNodeId: args.firstNodeId,
-                    firstPortId: args.firstPortId,
-                    secondNodeId: args.secondNodeId,
-                    secondPortId: args.secondPortId
-                });
-            }
-        },
-        removeConnection: {
-            type: types_1.WSNodeConnectionType,
-            description: "Deletes a connection between nodes.",
-            args: {
-                firstNodeId: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLInt) },
-                firstPortId: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLInt) },
-                secondNodeId: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLInt) },
-                secondPortId: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLInt) },
-            },
-            resolve: (parent, args) => {
-                __1.workspaceDAO.removeConnection({
-                    firstNodeId: args.firstNodeId,
-                    firstPortId: args.firstPortId,
-                    secondNodeId: args.secondNodeId,
-                    secondPortId: args.secondPortId
-                });
-            }
-        },
+        // updateNodePosition: {
+        //     type: WSNodeConnectionType,
+        //     description: "Updates the position of workspace node.",
+        //     args: {
+        //         nodeId: { type: new GraphQLNonNull(GraphQLInt) },
+        //         x: { type: new GraphQLNonNull(GraphQLFloat) },
+        //         y: { type: new GraphQLNonNull(GraphQLFloat) },
+        //     },
+        //     resolve: (parent: any, args) => {
+        //         workspaceDAO.updateWSNodePosition(args.nodeId, {x: args.x, y: args.y})
+        //     }
+        // },
+        // addNode: {
+        //     type: WSNodeType,
+        //     description: "Adds a node to workspace.",
+        //     args: {
+        //         id: { type: new GraphQLNonNull(GraphQLInt) },
+        //         x: { type: new GraphQLNonNull(GraphQLFloat) },
+        //         y: { type: new GraphQLNonNull(GraphQLFloat) },
+        //         type: { type: new GraphQLNonNull(GraphQLString) },
+        //         value: { type: new GraphQLNonNull(GraphQLFloat) },
+        //     },
+        //     resolve: (parent: any, args: any) => {
+        //         workspaceDAO.addNewWSNode({
+        //             id: args.id,
+        //             position: {x: args.x, y: args.y},
+        //             type: args.type,
+        //             value: args.value
+        //         })
+        //     }
+        // },
+        // removeNode: {
+        //     type: WSNodeType,
+        //     description: "Deletes a node from workspace.",
+        //     resolve: (parent: any, args: {nodeId: number}) => {
+        //         workspaceDAO.removeWSNode(args.nodeId)
+        //     }
+        // },
+        // addConnection: {
+        //     type: WSNodeConnectionType,
+        //     description: "Adds new connection between nodes.",
+        //     args: {
+        //         firstNodeId: { type: new GraphQLNonNull(GraphQLInt) },
+        //         firstPortId: { type: new GraphQLNonNull(GraphQLInt) },
+        //         secondNodeId: { type: new GraphQLNonNull(GraphQLInt) },
+        //         secondPortId: { type: new GraphQLNonNull(GraphQLInt) },
+        //     },
+        //     resolve: (parent: any, args: any) => {
+        //         workspaceDAO.addNewConnection({
+        //             firstNodeId: args.firstNodeId,
+        //             firstPortId: args.firstPortId,
+        //             secondNodeId: args.secondNodeId,
+        //             secondPortId: args.secondPortId
+        //         })
+        //     }
+        // },
+        // removeConnection: {
+        //     type: WSNodeConnectionType,
+        //     description: "Deletes a connection between nodes.",
+        //     args: {
+        //         firstNodeId: { type: new GraphQLNonNull(GraphQLInt) },
+        //         firstPortId: { type: new GraphQLNonNull(GraphQLInt) },
+        //         secondNodeId: { type: new GraphQLNonNull(GraphQLInt) },
+        //         secondPortId: { type: new GraphQLNonNull(GraphQLInt) },
+        //     },
+        //     resolve: (parent: any, args: any) => {
+        //         workspaceDAO.removeConnection({
+        //             firstNodeId: args.firstNodeId,
+        //             firstPortId: args.firstPortId,
+        //             secondNodeId: args.secondNodeId,
+        //             secondPortId: args.secondPortId
+        //         })
+        //     }
+        // },
     })
 });

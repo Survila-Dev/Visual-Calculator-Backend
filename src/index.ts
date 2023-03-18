@@ -7,10 +7,10 @@ import { workspacesDAOJSON } from "./DAO/workspaces-dao-json"
 require('dotenv').config()
 const expressGraphQL = require('express-graphql').graphqlHTTP
 
-import mongodb from "mongodb"
+import { MongoClient } from "mongodb"
 import { workspacesDAOmongoDB, workspacesDAOmongoDBClass } from "./DAO/workspaces-dao-mongoDB"
 
-const MongoClient = mongodb.MongoClient;
+const mongoClientForApp = MongoClient;
 
 const app: Express = express()
 const port = process.env.PORT
@@ -37,7 +37,7 @@ app.use("/", expressGraphQL({
 
 if (process.env.DB_URI) {
 
-    MongoClient.connect(
+    mongoClientForApp.connect(
         process.env.DB_URI,
         {
             wtimeoutMS: 2500,

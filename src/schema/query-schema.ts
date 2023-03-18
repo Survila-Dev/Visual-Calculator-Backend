@@ -2,7 +2,7 @@ import { GraphQLObjectType } from "graphql";
 import { workspaceDAO } from "..";
 import { WorkspaceType } from "./types";
 
-const userID = "12345"
+const userID = "12"
 
 export const RootQueryType = new GraphQLObjectType({
     name: "Query",

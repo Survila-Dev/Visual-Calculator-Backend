@@ -3,7 +3,7 @@ import { workspaceDAO } from "..";
 import { WorkspaceInputType } from "./input-types";
 import { WorkspaceType, WSNodeConnectionType, WSNodeType } from "./types";
 
-const userID = "12345"
+const userID = "12"
 
 export const PositionType2 = new GraphQLObjectType({
     name: "Position",

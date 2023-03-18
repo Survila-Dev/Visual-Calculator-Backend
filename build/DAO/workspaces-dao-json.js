@@ -35,7 +35,7 @@ class workspacesDAOJSON extends workspaces_dao_type_1.IWorkspacesDAO {
             console.log("Place holder for database inject subroutine.");
         });
     }
-    getWholeWorkspace() {
+    getWholeWorkspace(userID) {
         return __awaiter(this, void 0, void 0, function* () {
             console.log("Overwriting workspace from backend.");
             const data = yield fs_1.promises.readFile(jsonFileName, "utf8");
@@ -44,66 +44,12 @@ class workspacesDAOJSON extends workspaces_dao_type_1.IWorkspacesDAO {
             return workspace;
         });
     }
-    updateWSNodePosition(nodeId, newPosition) {
-        return __awaiter(this, void 0, void 0, function* () {
-            readAlterWrite((curWorkspace) => {
-                curWorkspace.nodes[nodeId].position = newPosition;
-                return curWorkspace;
-            });
-        });
-    }
-    updateWholeWorkspace(newWorkspace) {
+    updateWholeWorkspace(userID, newWorkspace) {
         return __awaiter(this, void 0, void 0, function* () {
             console.log("Updating the workspace.");
             readAlterWrite((curWorksapce) => {
                 return newWorkspace;
             });
-        });
-    }
-    addNewConnection(connection) {
-        return __awaiter(this, void 0, void 0, function* () {
-            throw new Error("Not implemented.");
-            // readAlterWrite((curWorkspace) => {
-            //     curWorkspace.nodes[connection.firstNodeId].connections.push({
-            //         otherNodeId: curWorkspace.nodes[connection.secondNodeId].id,
-            //         portOther: connection.secondPortId,
-            //         portSelf: connection.firstPortId
-            //     })
-            //     curWorkspace.nodes[connection.secondNodeId].connections.push({
-            //         otherNodeId: curWorkspace.nodes[connection.firstNodeId].id,
-            //         portOther: connection.firstPortId,
-            //         portSelf: connection.secondPortId
-            //     })
-            //     return curWorkspace
-            // })
-        });
-    }
-    removeConnection(connection) {
-        return __awaiter(this, void 0, void 0, function* () {
-            throw new Error("Not implemented.");
-        });
-    }
-    addNewWSNode(node) {
-        return __awaiter(this, void 0, void 0, function* () {
-            throw new Error("Not implemented.");
-            // readAlterWrite((curWorkspace) => {
-            //     curWorkspace.nodes.push(
-            //         {
-            //             id: node.id,
-            //             position: node.position,
-            //             type: node.type,
-            //             value: node.value,
-            //             connections: [],
-            //             fullyConnected: false,
-            //         }
-            //     )
-            //     return curWorkspace
-            // })
-        });
-    }
-    removeWSNode(nodeId) {
-        return __awaiter(this, void 0, void 0, function* () {
-            throw new Error("Not implemented.");
         });
     }
 }
