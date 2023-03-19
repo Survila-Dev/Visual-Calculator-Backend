@@ -29,9 +29,9 @@ export abstract class IWorkspacesDAO {
 
     abstract injectDB(client: mongodb.MongoClient): Promise<void | Error>
 
-    abstract getWholeWorkspace(userID: string): Promise<Workspace | Error>
+    abstract getWholeWorkspace(accessToken: string): Promise<Workspace | Error>
 
-    abstract updateWholeWorkspace(userID: string, newWorkspace: Workspace): Promise<void | Error>
+    abstract updateWholeWorkspace(accessToken: string, newWorkspace: Workspace): Promise<void | Error>
 
     // abstract addNewConnection?(connection: IWSNodeConnection): Promise<void>
 

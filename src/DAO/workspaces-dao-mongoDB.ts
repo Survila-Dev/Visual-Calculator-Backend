@@ -1,5 +1,7 @@
 import { IWorkspacesDAO, Workspace } from "./workspaces-dao-type";
 import mongodb from "mongodb"
+import axios from "axios";
+import { access } from "fs";
 
 let workspacesDBContent: any
 
@@ -7,6 +9,29 @@ let workspacesDBContent: any
 //  * Communicates with *mongoDB* database, gets and updates the database.
 //  */
 export class workspacesDAOmongoDBClass extends IWorkspacesDAO {
+
+    async getUserIDFromAuth(bearerToken: string): Promise<string> {
+        //ToDo get the user id from /userinfo endpoint
+        try {
+            const res = await axios({
+                method: 'get',
+                url:"https://"+ process.env.AUTH0_DOMAIN + "/userinfo",
+                headers: {
+                    Authorization: "Bearer " + bearerToken
+                },
+            });
+            console.log("res:")
+            console.log(res)
+            console.log("res.data.sub:")
+            console.log(res.data.sub)
+            return res.data.sub
+        } catch (e) {
+            console.error(e)
+            return "Error"
+        }
+
+        
+    }
 
     async injectDB(conn: mongodb.MongoClient): Promise<void> {
         if (workspacesDBContent) {
@@ -21,7 +46,9 @@ export class workspacesDAOmongoDBClass extends IWorkspacesDAO {
         }
     }
 
-    async getWholeWorkspace(userID: string): Promise<Workspace> {
+    async getWholeWorkspace(accessToken: string): Promise<Workspace> {
+        // Getting userID:
+        const userID = await this.getUserIDFromAuth(accessToken)
   
         const query = {"user_id": {$eq: userID}}
         let cursor
@@ -36,9 +63,12 @@ export class workspacesDAOmongoDBClass extends IWorkspacesDAO {
 
     }
 
-    async updateWholeWorkspace(userID: string, workspace: Workspace): Promise<void | Error> {
+    async updateWholeWorkspace(accessToken: string, workspace: Workspace): Promise<void | Error> {
 
         try {
+            // Getting userID:
+            const userID = await this.getUserIDFromAuth(accessToken)
+
             // Checking if the document already exists
             const query = {"user_id": {$eq: userID}}
             let cursor

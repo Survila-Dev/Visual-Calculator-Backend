@@ -11,7 +11,11 @@ export const RootQueryType = new GraphQLObjectType({
         currentWorkspace: {
             type: WorkspaceType,
             description: "The current workspace.",
-            resolve: () => workspaceDAO.getWholeWorkspace(userID)
+            resolve: (parent,args,context) => {
+                const accessToken = context.reqHeader.bearerToken
+                console.log(accessToken)
+                return workspaceDAO.getWholeWorkspace(accessToken)
+            }
         },
     })
 })

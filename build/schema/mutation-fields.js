@@ -24,8 +24,10 @@ exports.MutationQueryType = new graphql_1.GraphQLObjectType({
             args: {
                 workspace: { type: input_types_1.WorkspaceInputType }
             },
-            resolve: (parent, args) => {
-                __1.workspaceDAO.updateWholeWorkspace(userID, args.workspace);
+            resolve: (parent, args, context) => {
+                // const userID = workspaceDAO.getUserIDFromAuth("")
+                const accessToken = context.reqHeader.bearerToken;
+                __1.workspaceDAO.updateWholeWorkspace(accessToken, args.workspace);
             }
         },
         // updateNodePosition: {
