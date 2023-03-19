@@ -20,13 +20,11 @@ require('dotenv').config();
 const expressGraphQL = require('express-graphql').graphqlHTTP;
 const mongodb_1 = require("mongodb");
 const workspaces_dao_mongoDB_1 = require("./DAO/workspaces-dao-mongoDB");
-// import * as dotenv from "dotenv";
-const express_oauth2_jwt_bearer_1 = require("express-oauth2-jwt-bearer");
 // dotenv.config();
-const validateAccessToken = (0, express_oauth2_jwt_bearer_1.auth)({
-    issuerBaseURL: `https://${process.env.AUTH0_DOMAIN}`,
-    audience: process.env.AUTH0_AUDIENCE,
-});
+// const validateAccessToken = auth({
+//   issuerBaseURL: `https://${process.env.AUTH0_DOMAIN}`,
+//   audience: process.env.AUTH0_AUDIENCE,
+// });
 const mongoClientForApp = mongodb_1.MongoClient;
 const app = (0, express_1.default)();
 const port = process.env.PORT;
@@ -39,12 +37,12 @@ if (!port) {
 else if (!dataRoute) {
     throw new Error("Failed to spin up server because data route is undefined.");
 }
-const jwtCheck = (0, express_oauth2_jwt_bearer_1.auth)({
-    audience: 'http://localhost:4000/',
-    issuerBaseURL: 'https://dev-huqedgjtubcmwpde.us.auth0.com/',
-    tokenSigningAlg: 'RS256'
-});
-app.use(jwtCheck);
+// const jwtCheck = auth({
+//     audience: 'http://localhost:4000/',
+//     issuerBaseURL: 'https://dev-huqedgjtubcmwpde.us.auth0.com/',
+//     tokenSigningAlg: 'RS256'
+// });
+// app.use(jwtCheck);
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 app.use("/", (req, res) => expressGraphQL({

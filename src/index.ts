@@ -15,10 +15,10 @@ import { auth } from "express-oauth2-jwt-bearer";
 
 // dotenv.config();
 
-const validateAccessToken = auth({
-  issuerBaseURL: `https://${process.env.AUTH0_DOMAIN}`,
-  audience: process.env.AUTH0_AUDIENCE,
-});
+// const validateAccessToken = auth({
+//   issuerBaseURL: `https://${process.env.AUTH0_DOMAIN}`,
+//   audience: process.env.AUTH0_AUDIENCE,
+// });
 
 
 const mongoClientForApp = MongoClient;
@@ -36,13 +36,13 @@ if (!port) {
     throw new Error("Failed to spin up server because data route is undefined.")
 }
 
-const jwtCheck = auth({
-    audience: 'http://localhost:4000/',
-    issuerBaseURL: 'https://dev-huqedgjtubcmwpde.us.auth0.com/',
-    tokenSigningAlg: 'RS256'
-});
+// const jwtCheck = auth({
+//     audience: 'http://localhost:4000/',
+//     issuerBaseURL: 'https://dev-huqedgjtubcmwpde.us.auth0.com/',
+//     tokenSigningAlg: 'RS256'
+// });
 
-app.use(jwtCheck);
+// app.use(jwtCheck);
 
 app.use(cors());
 app.use(express.json())
