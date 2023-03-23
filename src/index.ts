@@ -10,16 +10,7 @@ const expressGraphQL = require('express-graphql').graphqlHTTP
 import { MongoClient } from "mongodb"
 import { workspacesDAOmongoDB, workspacesDAOmongoDBClass } from "./DAO/workspaces-dao-mongoDB"
 
-// import * as dotenv from "dotenv";
 import { auth } from "express-oauth2-jwt-bearer";
-
-// dotenv.config();
-
-// const validateAccessToken = auth({
-//   issuerBaseURL: `https://${process.env.AUTH0_DOMAIN}`,
-//   audience: process.env.AUTH0_AUDIENCE,
-// });
-
 
 const mongoClientForApp = MongoClient;
 
@@ -36,13 +27,16 @@ if (!port) {
     throw new Error("Failed to spin up server because data route is undefined.")
 }
 
-// const jwtCheck = auth({
-//     audience: 'http://localhost:4000/',
-//     issuerBaseURL: 'https://dev-huqedgjtubcmwpde.us.auth0.com/',
-//     tokenSigningAlg: 'RS256'
-// });
+console.log(process.env.AUTH0_AUDIENCE)
 
-// app.use(jwtCheck);
+// dotenv.config()
+
+const jwtCheck = auth({
+    issuerBaseURL: `https://${process.env.AUTH0_DOMAIN}`,
+    audience: process.env.AUTH0_AUDIENCE,
+});
+
+app.use(jwtCheck);
 
 app.use(cors());
 app.use(express.json())
