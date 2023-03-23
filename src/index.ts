@@ -38,8 +38,16 @@ const jwtCheck = auth({
 
 app.use(jwtCheck);
 
-app.use(cors());
+app.use(cors({
+    origin: 'https://localhost:3000/'
+}));
 app.use(express.json())
+
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "https://localhost:3000/");
+    // res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 
 app.use("/", (req, res) => expressGraphQL({
     schema: mainSchema,
