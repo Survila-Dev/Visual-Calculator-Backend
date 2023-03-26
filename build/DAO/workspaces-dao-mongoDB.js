@@ -23,22 +23,25 @@ class workspacesDAOmongoDBClass extends workspaces_dao_type_1.IWorkspacesDAO {
     getUserIDFromAuth(bearerToken) {
         return __awaiter(this, void 0, void 0, function* () {
             //ToDo get the user id from /userinfo endpoint
+            return "12345";
             try {
                 const res = yield (0, axios_1.default)({
                     method: 'get',
                     url: "https://" + process.env.AUTH0_DOMAIN + "/userinfo",
                     headers: {
-                        Authorization: "Bearer " + bearerToken
+                        Authorization: bearerToken
                     },
                 });
-                console.log("res:");
-                console.log(res);
+                // console.log("res:")
+                // console.log(res)
+                console.log("Request for user info successful");
                 console.log("res.data.sub:");
-                console.log(res.data.sub);
+                // console.log(res.data.sub)
                 return res.data.sub;
             }
             catch (e) {
-                console.error(e);
+                // console.error(e)
+                console.log("Request for user info failed");
                 return "Error";
             }
         });
@@ -60,6 +63,7 @@ class workspacesDAOmongoDBClass extends workspaces_dao_type_1.IWorkspacesDAO {
         return __awaiter(this, void 0, void 0, function* () {
             // Getting userID:
             const userID = yield this.getUserIDFromAuth(accessToken);
+            // const userID = "12345"
             const query = { "user_id": { $eq: userID } };
             let cursor;
             try {
@@ -69,7 +73,46 @@ class workspacesDAOmongoDBClass extends workspaces_dao_type_1.IWorkspacesDAO {
                 console.error(`Unable to issue find command, ${e}`);
             }
             const readValue = yield cursor.toArray();
-            return readValue[0].content;
+            if (readValue[0] !== undefined) {
+                return readValue[0].content;
+            }
+            else {
+                return ({
+                    "name": "First workspace - hello world",
+                    "id": 0,
+                    "nodes": [
+                        {
+                            "id": 0,
+                            "type": "constant",
+                            "position": {
+                                "x": 0,
+                                "y": 0
+                            },
+                            "connections": [],
+                            "value": 200,
+                            "fullyConnected": false
+                        },
+                        {
+                            "id": 1,
+                            "type": "constant",
+                            "position": {
+                                "x": 100,
+                                "y": 100
+                            },
+                            "connections": [],
+                            "value": 400,
+                            "fullyConnected": false
+                        }
+                    ],
+                    "initNodes": [],
+                    "triggerCalc": false,
+                    // "fieldPosition": {
+                    //     "x": 0,
+                    //     "y": 20
+                    // },
+                    // "curveConnections": []
+                });
+            }
         });
     }
     updateWholeWorkspace(accessToken, workspace) {
@@ -77,6 +120,7 @@ class workspacesDAOmongoDBClass extends workspaces_dao_type_1.IWorkspacesDAO {
             try {
                 // Getting userID:
                 const userID = yield this.getUserIDFromAuth(accessToken);
+                // const userID = "12345"
                 // Checking if the document already exists
                 const query = { "user_id": { $eq: userID } };
                 let cursor;
