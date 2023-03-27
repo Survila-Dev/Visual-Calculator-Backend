@@ -28,24 +28,25 @@ if (!port) {
 }
 
 const jwtCheck = auth({
-    issuerBaseURL: `https://${process.env.AUTH0_DOMAIN}`,
     audience: process.env.AUTH0_AUDIENCE,
+    issuerBaseURL: process.env.AUTH0_DOMAIN,
+    tokenSigningAlg: 'RS256'
 });
 
 app.use(jwtCheck);
 // app.use(cors())
+app.use(express.json())
 
 // app.use(cors({
 //     origin: ['https://localhost:3000/', 'https://localhost:4000/', 'https://localhost:3000', 'https://localhost:4000' ]
 // }));
-app.use(express.json())
 
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    res.header("Content-type", 'application/json')
-    next();
-  });
+// app.use(function(req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//     res.header("Content-type", 'application/json')
+//     next();
+//   });
 
 // app.use(cors({
 //     'allowedHeaders': ['Content-Type'],
@@ -59,13 +60,13 @@ app.use(function(req, res, next) {
 //     next();
 // });
 
-app.use("/", expressGraphQL((req: any) => {
-    return ({
-        schema: mainSchema,
-        graphiql: true,
-        context: {reqHeader: req}
-    })
-}))
+// app.use("/", expressGraphQL((req: any) => {
+//     return ({
+//         schema: mainSchema,
+//         graphiql: true,
+//         context: {reqHeader: req}
+//     })
+// }))
 
 // app.listen(port, () => console.log(`Server is listening to port ${port}`))
 
