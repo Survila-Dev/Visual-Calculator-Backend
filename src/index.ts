@@ -34,8 +34,23 @@ const jwtCheck = auth({
 });
 
 app.use(jwtCheck);
-// app.use(cors())
 app.use(express.json())
+app.set("json spaces", 2);
+
+app.use((req, res, next) => {
+    res.contentType("application/json; charset=utf-8");
+    next();
+  });
+// app.use(nocache());
+
+app.use(
+    cors({
+      origin: process.env.CLIENT_ORIGIN_URL,
+      methods: ["GET", "POST"],
+      allowedHeaders: ["Authorization", "Content-Type"],
+      maxAge: 86400,
+    })
+  );
 
 // app.use(cors({
 //     origin: ['https://localhost:3000/', 'https://localhost:4000/', 'https://localhost:3000', 'https://localhost:4000' ]

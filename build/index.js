@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.workspaceDAO = void 0;
 const express_1 = __importDefault(require("express"));
-const schema_1 = require("./schema/schema");
+const cors_1 = __importDefault(require("cors"));
 require('dotenv').config();
 const expressGraphQL = require('express-graphql').graphqlHTTP;
 const mongodb_1 = require("mongodb");
@@ -33,21 +33,31 @@ else if (!dataRoute) {
     throw new Error("Failed to spin up server because data route is undefined.");
 }
 const jwtCheck = (0, express_oauth2_jwt_bearer_1.auth)({
-    issuerBaseURL: `https://${process.env.AUTH0_DOMAIN}`,
     audience: process.env.AUTH0_AUDIENCE,
+    issuerBaseURL: process.env.AUTH0_DOMAIN,
+    tokenSigningAlg: 'RS256'
 });
 app.use(jwtCheck);
-// app.use(cors())
+app.use(express_1.default.json());
+app.use((req, res, next) => {
+    res.contentType("application/json; charset=utf-8");
+    next();
+});
+app.use((0, cors_1.default)({
+    origin: process.env.CLIENT_ORIGIN_URL,
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Authorization", "Content-Type"],
+    maxAge: 86400,
+}));
 // app.use(cors({
 //     origin: ['https://localhost:3000/', 'https://localhost:4000/', 'https://localhost:3000', 'https://localhost:4000' ]
 // }));
-app.use(express_1.default.json());
-app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    res.header("Content-type", 'application/json');
-    next();
-});
+// app.use(function(req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//     res.header("Content-type", 'application/json')
+//     next();
+//   });
 // app.use(cors({
 //     'allowedHeaders': ['Content-Type'],
 //     'origin': '*',
@@ -58,13 +68,13 @@ app.use(function (req, res, next) {
 //     // res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 //     next();
 // });
-app.use("/", expressGraphQL((req) => {
-    return ({
-        schema: schema_1.mainSchema,
-        graphiql: true,
-        context: { reqHeader: req }
-    });
-}));
+// app.use("/", expressGraphQL((req: any) => {
+//     return ({
+//         schema: mainSchema,
+//         graphiql: true,
+//         context: {reqHeader: req}
+//     })
+// }))
 // app.listen(port, () => console.log(`Server is listening to port ${port}`))
 if (process.env.DB_URI) {
     mongoClientForApp.connect(process.env.DB_URI, {
