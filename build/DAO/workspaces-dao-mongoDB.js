@@ -64,6 +64,7 @@ class workspacesDAOmongoDBClass extends workspaces_dao_type_1.IWorkspacesDAO {
             // Getting userID:
             const userID = yield this.getUserIDFromAuth(accessToken);
             // const userID = "12345"
+            console.log("Executing the code in backend.");
             const query = { "user_id": { $eq: userID } };
             let cursor;
             try {

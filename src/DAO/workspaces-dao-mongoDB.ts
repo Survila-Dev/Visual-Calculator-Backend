@@ -54,6 +54,8 @@ export class workspacesDAOmongoDBClass extends IWorkspacesDAO {
         const userID = await this.getUserIDFromAuth(accessToken)
         // const userID = "12345"
   
+        console.log("Executing the code in backend.")
+
         const query = {"user_id": {$eq: userID}}
         let cursor
         try {
