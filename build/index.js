@@ -15,8 +15,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.workspaceDAO = void 0;
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
+const helmet_1 = __importDefault(require("helmet"));
+const nocache_1 = __importDefault(require("nocache"));
 require('dotenv').config();
-const expressGraphQL = require('express-graphql').graphqlHTTP;
+// const expressGraphQL = require('express-graphql').graphqlHTTP
 const mongodb_1 = require("mongodb");
 const workspaces_dao_mongoDB_1 = require("./DAO/workspaces-dao-mongoDB");
 const express_oauth2_jwt_bearer_1 = require("express-oauth2-jwt-bearer");
@@ -32,6 +34,21 @@ if (!port) {
 else if (!dataRoute) {
     throw new Error("Failed to spin up server because data route is undefined.");
 }
+app.use((0, helmet_1.default)({
+    hsts: {
+        maxAge: 31536000,
+    },
+    contentSecurityPolicy: {
+        useDefaults: false,
+        directives: {
+            "default-src": ["'none'"],
+            "frame-ancestors": ["'none'"],
+        },
+    },
+    frameguard: {
+        action: "deny",
+    },
+}));
 const jwtCheck = (0, express_oauth2_jwt_bearer_1.auth)({
     audience: process.env.AUTH0_AUDIENCE,
     issuerBaseURL: process.env.AUTH0_DOMAIN,
@@ -39,13 +56,15 @@ const jwtCheck = (0, express_oauth2_jwt_bearer_1.auth)({
 });
 app.use(jwtCheck);
 app.use(express_1.default.json());
+app.set("json spaces", 2);
 app.use((req, res, next) => {
     res.contentType("application/json; charset=utf-8");
     next();
 });
+app.use((0, nocache_1.default)());
 app.use((0, cors_1.default)({
     origin: process.env.CLIENT_ORIGIN_URL,
-    methods: ["GET", "POST"],
+    methods: ["GET", "PUT", "POST"],
     allowedHeaders: ["Authorization", "Content-Type"],
     maxAge: 86400,
 }));
