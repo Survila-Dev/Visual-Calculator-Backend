@@ -18,7 +18,7 @@ const cors_1 = __importDefault(require("cors"));
 const helmet_1 = __importDefault(require("helmet"));
 const nocache_1 = __importDefault(require("nocache"));
 require('dotenv').config();
-// const expressGraphQL = require('express-graphql').graphqlHTTP
+const expressGraphQL = require('express-graphql').graphqlHTTP;
 const mongodb_1 = require("mongodb");
 const workspaces_dao_mongoDB_1 = require("./DAO/workspaces-dao-mongoDB");
 const express_oauth2_jwt_bearer_1 = require("express-oauth2-jwt-bearer");
@@ -50,8 +50,8 @@ app.use((0, helmet_1.default)({
     },
 }));
 const jwtCheck = (0, express_oauth2_jwt_bearer_1.auth)({
-    audience: process.env.AUTH0_AUDIENCE,
-    issuerBaseURL: process.env.AUTH0_DOMAIN,
+    audience: "https://viscalc.backend.com",
+    issuerBaseURL: "https://dev-huqedgjtubcmwpde.us.auth0.com/",
     tokenSigningAlg: 'RS256'
 });
 app.use(jwtCheck);
@@ -63,7 +63,7 @@ app.use((req, res, next) => {
 });
 app.use((0, nocache_1.default)());
 app.use((0, cors_1.default)({
-    origin: process.env.CLIENT_ORIGIN_URL,
+    origin: "http://localhost:3000",
     methods: ["GET", "PUT", "POST"],
     allowedHeaders: ["Authorization", "Content-Type"],
     maxAge: 86400,

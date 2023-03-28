@@ -2,14 +2,14 @@ import express from "express"
 import { Express } from "express"
 import { mainSchema } from "./schema/schema"
 import cors from "cors"
-// import  { graphqlHTTP } from "express-graphql"
+import  { graphqlHTTP } from "express-graphql"
 import { workspacesDAOJSON } from "./DAO/workspaces-dao-json"
 
 import helmet from "helmet";
 import nocache from "nocache";
 
 require('dotenv').config()
-// const expressGraphQL = require('express-graphql').graphqlHTTP
+const expressGraphQL = require('express-graphql').graphqlHTTP
 
 import { MongoClient } from "mongodb"
 import { workspacesDAOmongoDB, workspacesDAOmongoDBClass } from "./DAO/workspaces-dao-mongoDB"
@@ -50,8 +50,8 @@ app.use(
   );
 
 const jwtCheck = auth({
-    audience: process.env.AUTH0_AUDIENCE,
-    issuerBaseURL: process.env.AUTH0_DOMAIN,
+    audience: "https://viscalc.backend.com",
+    issuerBaseURL: "https://dev-huqedgjtubcmwpde.us.auth0.com/",
     tokenSigningAlg: 'RS256'
 });
 
@@ -67,7 +67,7 @@ app.use(nocache());
 
 app.use(
     cors({
-      origin: process.env.CLIENT_ORIGIN_URL,
+      origin: "http://localhost:3000",
       methods: ["GET", "PUT", "POST"],
       allowedHeaders: ["Authorization", "Content-Type"],
       maxAge: 86400,
