@@ -36,6 +36,7 @@ app.use(
       hsts: {
         maxAge: 31536000,
       },
+      crossOriginResourcePolicy: false,
       contentSecurityPolicy: {
         useDefaults: false,
         directives: {
@@ -67,8 +68,9 @@ app.use(nocache());
 
 app.use(
     cors({
-      origin: "http://localhost:3000", //192.168.2.32
+      origin: "*", //192.168.2.32
       methods: ["GET", "PUT", "POST"],
+      credentials: true,
       allowedHeaders: ["Authorization", "Content-Type"],
       maxAge: 86400,
     })
@@ -101,7 +103,7 @@ app.use("/", expressGraphQL((req: any) => {
     return ({
         schema: mainSchema,
         graphiql: true,
-        context: {reqHeader: req}
+        // context: {reqHeader: req}
     })
 }))
 

@@ -39,6 +39,7 @@ app.use((0, helmet_1.default)({
     hsts: {
         maxAge: 31536000,
     },
+    crossOriginResourcePolicy: false,
     contentSecurityPolicy: {
         useDefaults: false,
         directives: {
@@ -55,7 +56,7 @@ const jwtCheck = (0, express_oauth2_jwt_bearer_1.auth)({
     issuerBaseURL: "https://dev-huqedgjtubcmwpde.us.auth0.com/",
     tokenSigningAlg: 'RS256'
 });
-// app.use(jwtCheck);
+app.use(jwtCheck);
 app.use(express_1.default.json());
 app.set("json spaces", 2);
 app.use((req, res, next) => {
@@ -64,8 +65,9 @@ app.use((req, res, next) => {
 });
 app.use((0, nocache_1.default)());
 app.use((0, cors_1.default)({
-    origin: "http://localhost:3000",
+    origin: "*",
     methods: ["GET", "PUT", "POST"],
+    credentials: true,
     allowedHeaders: ["Authorization", "Content-Type"],
     maxAge: 86400,
 }));
