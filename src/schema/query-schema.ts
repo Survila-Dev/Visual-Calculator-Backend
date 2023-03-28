@@ -14,7 +14,8 @@ export const RootQueryType = new GraphQLObjectType({
             resolve: (parent,args,context) => {
                 console.log("Got in")
                 // console.log("Query triggered")
-                const accessToken = context.reqHeader.header('authorization')
+                // const accessToken = context.reqHeader.header('authorization')
+                const accessToken = "0"
                 // console.log(accessToken)
                 // console.log("Bearer token read")
                 return workspaceDAO.getWholeWorkspace(accessToken)

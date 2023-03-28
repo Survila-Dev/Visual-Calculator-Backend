@@ -55,7 +55,7 @@ const jwtCheck = auth({
     tokenSigningAlg: 'RS256'
 });
 
-app.use(jwtCheck);
+// app.use(jwtCheck);
 app.use(express.json())
 app.set("json spaces", 2);
 
@@ -67,7 +67,7 @@ app.use(nocache());
 
 app.use(
     cors({
-      origin: "http://localhost:3000",
+      origin: "http://localhost:3000", //192.168.2.32
       methods: ["GET", "PUT", "POST"],
       allowedHeaders: ["Authorization", "Content-Type"],
       maxAge: 86400,
@@ -97,13 +97,13 @@ app.use(
 //     next();
 // });
 
-// app.use("/", expressGraphQL((req: any) => {
-//     return ({
-//         schema: mainSchema,
-//         graphiql: true,
-//         context: {reqHeader: req}
-//     })
-// }))
+app.use("/", expressGraphQL((req: any) => {
+    return ({
+        schema: mainSchema,
+        graphiql: true,
+        context: {reqHeader: req}
+    })
+}))
 
 // app.listen(port, () => console.log(`Server is listening to port ${port}`))
 

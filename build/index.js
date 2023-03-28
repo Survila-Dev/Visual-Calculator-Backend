@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.workspaceDAO = void 0;
 const express_1 = __importDefault(require("express"));
+const schema_1 = require("./schema/schema");
 const cors_1 = __importDefault(require("cors"));
 const helmet_1 = __importDefault(require("helmet"));
 const nocache_1 = __importDefault(require("nocache"));
@@ -54,7 +55,7 @@ const jwtCheck = (0, express_oauth2_jwt_bearer_1.auth)({
     issuerBaseURL: "https://dev-huqedgjtubcmwpde.us.auth0.com/",
     tokenSigningAlg: 'RS256'
 });
-app.use(jwtCheck);
+// app.use(jwtCheck);
 app.use(express_1.default.json());
 app.set("json spaces", 2);
 app.use((req, res, next) => {
@@ -87,13 +88,13 @@ app.use((0, cors_1.default)({
 //     // res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 //     next();
 // });
-// app.use("/", expressGraphQL((req: any) => {
-//     return ({
-//         schema: mainSchema,
-//         graphiql: true,
-//         context: {reqHeader: req}
-//     })
-// }))
+app.use("/", expressGraphQL((req) => {
+    return ({
+        schema: schema_1.mainSchema,
+        graphiql: true,
+        context: { reqHeader: req }
+    });
+}));
 // app.listen(port, () => console.log(`Server is listening to port ${port}`))
 if (process.env.DB_URI) {
     mongoClientForApp.connect(process.env.DB_URI, {
