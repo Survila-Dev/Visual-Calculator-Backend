@@ -56,7 +56,7 @@ const jwtCheck = auth({
     tokenSigningAlg: 'RS256'
 });
 
-// app.use(jwtCheck);
+app.use(jwtCheck);
 app.use(express.json())
 app.set("json spaces", 2);
 
