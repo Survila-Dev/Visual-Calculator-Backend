@@ -78,7 +78,10 @@ export interface Workspace {
     id: number,
     nodes: WSNodeType[],
     initNodes: WSNodeType[],
-    triggerCalc: boolean
+    triggerCalc: boolean,
+    fieldPosition?: Coordinates2D,
+    curveConnections?: IWSNodeConnection[]
+
 }
 
 export interface Workspaces {

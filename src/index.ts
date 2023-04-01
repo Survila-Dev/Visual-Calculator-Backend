@@ -103,7 +103,7 @@ app.use("/", expressGraphQL((req: any) => {
     return ({
         schema: mainSchema,
         graphiql: true,
-        // context: {reqHeader: req}
+        context: {reqHeader: req}
     })
 }))
 

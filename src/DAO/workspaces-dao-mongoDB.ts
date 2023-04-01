@@ -12,24 +12,29 @@ export class workspacesDAOmongoDBClass extends IWorkspacesDAO {
 
     async getUserIDFromAuth(bearerToken: string): Promise<string> {
         //ToDo get the user id from /userinfo endpoint
-        return "12345"
+        // return "12345"
+        console.log(process.env.AUTH0_DOMAIN + "userinfo")
         try {
+            console.log("getting the user id")
             const res = await axios({
                 method: 'get',
-                url:"https://"+ process.env.AUTH0_DOMAIN + "/userinfo",
+                url:process.env.AUTH0_DOMAIN + "userinfo",
                 headers: {
-                    Authorization: bearerToken
+                    'Authorization': bearerToken,
+                    // 'Content-Type': `application/json`,
+                    // 'Accept'      : `application/json`,
+                    // "Access-Control-Allow-Origin": "*",
                 },
             });
             // console.log("res:")
             // console.log(res)
             console.log("Request for user info successful")
             console.log("res.data.sub:")
-            // console.log(res.data.sub)
+            console.log(res.data.sub)
             return res.data.sub
         } catch (e) {
-            // console.error(e)
             console.log("Request for user info failed")
+            console.error(e)
             return "Error"
         }
 
@@ -68,40 +73,19 @@ export class workspacesDAOmongoDBClass extends IWorkspacesDAO {
         if (readValue[0] !== undefined) {
             return readValue[0].content
         } else {
+            console.log("Return default workspace because no database value there.")
             return ({
                 "name": "First workspace - hello world",
                 "id": 0,
                 "nodes": [
-                    {
-                        "id": 0,
-                        "type": "constant",
-                        "position": {
-                            "x": 0,
-                            "y": 0
-                        },
-                        "connections": [],
-                        "value": 200,
-                        "fullyConnected": false
-                    },
-                    {
-                        "id": 1,
-                        "type": "constant",
-                        "position": {
-                            "x": 100,
-                            "y": 100
-                        },
-                        "connections": [],
-                        "value": 400,
-                        "fullyConnected": false
-                    }
                 ],
                 "initNodes": [],
                 "triggerCalc": false,
-                // "fieldPosition": {
-                //     "x": 0,
-                //     "y": 20
-                // },
-                // "curveConnections": []
+                "fieldPosition": {
+                    "x": 0,
+                    "y": 0
+                },
+                "curveConnections": []
             })
         }
         

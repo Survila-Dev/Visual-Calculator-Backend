@@ -94,7 +94,7 @@ app.use("/", expressGraphQL((req) => {
     return ({
         schema: schema_1.mainSchema,
         graphiql: true,
-        // context: {reqHeader: req}
+        context: { reqHeader: req }
     });
 }));
 // app.listen(port, () => console.log(`Server is listening to port ${port}`))
